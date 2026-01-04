@@ -3,93 +3,100 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-
+import { MapPin } from "lucide-react";
 const Navber = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Replace this with your actual Client Repository URL
+  const githubRepoUrl = "https://github.com/your-username/your-client-repo";
 
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
       <div className="py-4">
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
-            {/* --- Logo / Branding Section --- */}
+            {/* --- Logo Section --- */}
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="text-yellow-600 text-xl leading-none font-extrabold uppercase tracking-tighter">
-                  <p>ProEarn</p>
-                  <p className="text-gray-800">Global</p>
-                  <p className="text-xs font-medium text-gray-500">
-                    Earn & Grow
-                  </p>
+                <div className="flex items-center gap-3 group cursor-pointer">
+                  <div className="w-11 h-11 bg-[#E87D4E] rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200 group-hover:rotate-6 transition-transform duration-300">
+                    <MapPin className="text-white w-6 h-6 fill-current" />
+                  </div>
+                  <span className="text-2xl font-black tracking-tight text-zinc-900">
+                    Revme<span className="text-[#E87D4E]">.</span>
+                  </span>
                 </div>
               </Link>
             </div>
 
-            {/* --- Main Desktop Navigation --- */}
-            <div className="hidden md:flex items-center space-x-8 text-gray-800 text-lg font-semibold">
-              <Link to="/" className="hover:text-yellow-600 transition">
+            {/* --- Navigation & Developer Button --- */}
+            <div className="hidden md:flex items-center space-x-6">
+              <Link
+                to="/"
+                className="font-semibold text-gray-700 hover:text-indigo-600 transition"
+              >
                 Home
               </Link>
-              <Link to="/tasks" className="hover:text-yellow-600 transition">
-                Browse Tasks
-              </Link>
-              <Link
-                to="/leaderboard"
-                className="hover:text-yellow-600 transition"
+
+              {/* Join as Developer Button (Visible to everyone) */}
+              <a
+                href={githubRepoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-700 transition"
               >
-                Top Earners
-              </Link>
+                Join as Developer
+              </a>
             </div>
 
-            {/* --- User Menu Section --- */}
+            {/* --- User Section --- */}
             <div className="relative">
               <div className="flex flex-row items-center gap-3">
-                {/* Earning Badge for Logged In Users */}
+                {/* Available Coins (Logged Users Only) */}
                 {user && (
-                  <div className="hidden sm:block text-sm font-bold bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full border border-yellow-200">
-                    Balance: $0.00
+                  <div className="hidden sm:flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1 rounded-full border border-amber-200">
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      Coins:
+                    </span>
+                    <span className="font-extrabold text-sm">0.00</span>
                   </div>
                 )}
 
+                {/* Profile/Menu Trigger */}
                 <div
                   onClick={() => setIsOpen(!isOpen)}
-                  className="p-3 md:py-2 md:px-4 border border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+                  className="p-2 md:py-1 md:px-2 border border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
                 >
-                  <AiOutlineMenu />
+                  <AiOutlineMenu className="ml-1" />
                   <div className="hidden md:block">
-                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs text-gray-500">
-                      {user?.photoURL ? (
-                        <img
-                          className="rounded-full"
-                          src={user.photoURL}
-                          alt="profile"
-                        />
-                      ) : (
-                        "User"
-                      )}
-                    </div>
+                    {user?.photoURL ? (
+                      <img
+                        className="rounded-full w-8 h-8 object-cover border border-slate-200"
+                        src={user.photoURL}
+                        alt="profile"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-xs uppercase">
+                        ?
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* --- Dropdown Menu --- */}
               {isOpen && (
-                <div className="absolute rounded-xl shadow-md w-[45vw] md:w-[15vw] bg-white overflow-hidden right-0 top-14 text-sm border border-gray-100">
+                <div className="absolute rounded-xl shadow-xl w-[50vw] md:w-[15vw] bg-white overflow-hidden right-0 top-14 text-sm border border-gray-100 animate-in fade-in zoom-in duration-200">
                   <div className="flex flex-col cursor-pointer">
-                    {/* Mobile Only Links */}
-                    <Link
-                      to="/"
-                      className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                    {/* Mobile Only: Github Link */}
+                    <a
+                      href={githubRepoUrl}
+                      className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold text-indigo-600"
                     >
-                      Home
-                    </Link>
-                    <Link
-                      to="/tasks"
-                      className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                    >
-                      Browse Tasks
-                    </Link>
+                      Join as Developer
+                    </a>
 
                     {user ? (
                       <>
@@ -97,18 +104,15 @@ const Navber = () => {
                           to="/dashboard"
                           className="px-4 py-3 hover:bg-neutral-100 transition font-semibold border-t"
                         >
-                          My Dashboard
-                        </Link>
-                        <Link
-                          to="/withdraw"
-                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                        >
-                          Withdraw Funds
+                          Dashboard
                         </Link>
                         <hr />
                         <button
-                          onClick={logOut}
-                          className="px-4 py-3 hover:bg-red-50 text-red-600 transition font-semibold text-left w-full"
+                          onClick={() => {
+                            logOut();
+                            setIsOpen(false);
+                          }}
+                          className="px-4 py-3 hover:bg-red-50 text-red-600 transition font-bold text-left w-full"
                         >
                           Logout
                         </button>
@@ -123,9 +127,9 @@ const Navber = () => {
                         </Link>
                         <Link
                           to="/signup"
-                          className="px-4 py-3 hover:bg-yellow-50 text-yellow-700 transition font-bold"
+                          className="px-4 py-3 hover:bg-indigo-50 text-indigo-700 transition font-bold"
                         >
-                          Start Earning
+                          Register
                         </Link>
                       </>
                     )}
