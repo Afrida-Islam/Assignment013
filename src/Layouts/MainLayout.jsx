@@ -1,12 +1,12 @@
 import React from "react";
-import Navber from "../Components/Navber";
+import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../Components/Footer";
 
 const MainLayout = () => {
   return (
     <div>
-      <Navber />
+      <Navbar />
       <div className="mt-4">
         <Outlet />
       </div>
