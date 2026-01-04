@@ -33,10 +33,9 @@ const Login = () => {
         user.accessToken
       );
       navigate(from, { replace: true });
-      toast.success("Welcome back to ProEarn!");
+      toast.success("Log in successful!");
     } catch (err) {
-      console.log(err);
-      toast.error(err?.message);
+      toast.error(err?.message || "Invalid credentials");
     }
   };
 
@@ -49,92 +48,83 @@ const Login = () => {
         image: user?.photoURL,
       });
       navigate(from, { replace: true });
-      toast.success("Welcome back!");
+      toast.success("Google Login Successful!");
     } catch (err) {
-      console.log(err);
       setLoading(false);
       toast.error(err?.message);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-slate-50 font-sans">
-      <div className="flex flex-col w-full max-w-md p-8 rounded-2xl shadow-xl bg-white text-slate-800 border border-slate-100">
+    <div className="flex justify-center items-center min-h-screen bg-[#F3F4F6] px-4 font-sans">
+      <div className="flex flex-col w-full max-w-md p-10 rounded-[2.5rem] shadow-2xl bg-white text-slate-800 border border-white/20">
+        {/* Logo Icon */}
+        <div className="flex justify-center mb-6">
+          <div className="bg-orange-500 p-3 rounded-2xl shadow-lg shadow-orange-200">
+            <div className="w-6 h-6 bg-white rounded-full opacity-90"></div>
+          </div>
+        </div>
+
         {/* Header Section */}
-        <div className="mb-10 text-center">
-          <h1 className="text-3xl font-extrabold text-indigo-900 tracking-tight">
-            Welcome Back
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-black text-[#0F172A] tracking-tight">
+            Log in to unlock tasks
           </h1>
-          <p className="text-slate-500 mt-2">
-            Ready to start your next earning task?
+          <p className="text-slate-500 mt-2 font-medium">
+            Start turning your free time into digital gold.
           </p>
         </div>
 
         {/* Form Section */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-semibold text-slate-700"
-            >
-              Email Address
-            </label>
             <input
               type="email"
               name="email"
-              id="email"
               required
-              placeholder="name@company.com"
-              className="w-full px-4 py-3 border rounded-xl border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-slate-50"
+              placeholder="Email Address"
+              className="w-full px-5 py-4 border-2 rounded-2xl border-slate-100 focus:border-orange-500 focus:ring-0 outline-none transition-all bg-white placeholder:text-slate-400 font-medium"
             />
           </div>
 
           <div>
-            <div className="flex justify-between items-center mb-2">
-              <label
-                htmlFor="password"
-                className="text-sm font-semibold text-slate-700"
-              >
-                Password
-              </label>
-              <button
-                type="button"
-                className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition"
-              >
-                Forgot password?
-              </button>
-            </div>
             <input
               type="password"
               name="password"
-              autoComplete="current-password"
-              id="password"
               required
-              placeholder="••••••••"
-              className="w-full px-4 py-3 border rounded-xl border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-slate-50"
+              placeholder="Password"
+              className="w-full px-5 py-4 border-2 rounded-2xl border-slate-100 focus:border-orange-500 focus:ring-0 outline-none transition-all bg-white placeholder:text-slate-400 font-medium"
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98] flex justify-center items-center"
-          >
-            {loading ? (
-              <TbFidgetSpinner className="animate-spin text-xl" />
-            ) : (
-              "Sign In"
-            )}
-          </button>
+          <div className="flex items-center justify-between pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-8 rounded-2xl shadow-lg shadow-orange-200 transition-all active:scale-[0.97] flex-1 mr-4"
+            >
+              {loading ? (
+                <TbFidgetSpinner className="animate-spin text-xl m-auto" />
+              ) : (
+                "Sign In Securely"
+              )}
+            </button>
+            <button
+              type="button"
+              className="text-sm font-semibold text-slate-400 hover:text-orange-600 transition whitespace-nowrap"
+            >
+              Forgot password?
+            </button>
+          </div>
         </form>
 
         {/* Divider */}
-        <div className="relative my-8">
+        <div className="relative my-10">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-slate-200"></span>
+            <span className="w-full border-t border-slate-100"></span>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-4 text-slate-400 font-medium">
+          <div className="relative flex justify-center text-xs uppercase tracking-widest font-bold">
+            <span className="bg-white px-4 text-slate-400">
               Or continue with
             </span>
           </div>
@@ -143,21 +133,20 @@ const Login = () => {
         {/* Social Login */}
         <button
           onClick={handleGoogleSignIn}
-          className="flex justify-center items-center space-x-3 border border-slate-200 w-full py-3 rounded-xl hover:bg-slate-50 transition-colors font-medium text-slate-700"
+          className="flex justify-center items-center space-x-3 border-2 border-slate-50 w-full py-4 rounded-2xl hover:bg-slate-50 transition-colors font-bold text-slate-600 shadow-sm"
         >
           <FcGoogle size={24} />
-          <span>Google Account</span>
+          <span>Continue Google</span>
         </button>
 
         {/* Footer Link */}
-        <p className="mt-8 text-sm text-center text-slate-500">
-          New to the platform?{" "}
+        <p className="mt-10 text-sm text-center font-semibold text-slate-400">
+          New to ProEarn?{" "}
           <Link
-            state={from}
             to="/signup"
-            className="font-bold text-indigo-600 hover:text-indigo-800 underline-offset-4 hover:underline transition"
+            className="text-orange-600 hover:text-orange-700 transition"
           >
-            Create an Account
+            Sign Up
           </Link>
         </p>
       </div>

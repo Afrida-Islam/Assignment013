@@ -7,9 +7,7 @@ import { MapPin } from "lucide-react";
 const Navber = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
-  // Replace this with your actual Client Repository URL
-  const githubRepoUrl = "https://github.com/your-username/your-client-repo";
+  const githubRepoUrl = "https://github.com/Afrida-Islam";
 
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
@@ -34,17 +32,15 @@ const Navber = () => {
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 to="/"
-                className="font-semibold text-gray-700 hover:text-indigo-600 transition"
+                className="font-bold text-gray-700 hover:text-orange-600 transition"
               >
                 Home
               </Link>
-
-              {/* Join as Developer Button (Visible to everyone) */}
               <a
                 href={githubRepoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-700 transition"
+                className="bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition"
               >
                 Join as Developer
               </a>
